@@ -14,40 +14,22 @@ import Main from './components/main'
       socket:''  
     }
    }
- componentDidMount()
- {
-   var options = {
-    enableHighAccuracy: true,
-    timeout: 5000,
-    maximumAge: 0
-  };
-  
-  function success(pos) {
-    const data = {
-      lat: pos.coords.latitude,
-      long: pos.coords.longitude,
-      acc: pos.coords.accuracy
-    }
-    axios.post("/user/login", data)
-  }
-  
-  function locationEerror(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
-  }
-  
-  navigator.geolocation.getCurrentPosition(success, locationEerror, options)
-
- }
+   componentWillMount()
+   {
+    const { endpoint } = this.state;
+    const socket = io(endpoint)
+    this.setState({socket})
+    console.log(this.state.socket)
+   }
    
     render(){
-      const { endpoint } = this.state;
-      const socket = io(endpoint)
 
         return(<div>
       <h1>App</h1>
-            <Main  socket={socket}/>
+            <Main  socket={this.state.socket}/>
 
     </div>
     )
     }
- }
+  }
+ 

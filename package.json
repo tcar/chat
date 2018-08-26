@@ -4,7 +4,9 @@
   "description": "",
   "main": "chat.js",
   "scripts": {
-    "start": "webpack --mode=none -w --config webpack.config.js"
+    "start": "concurrently 'npm run server' 'npm run client'",
+    "server": "nodemon chat.js",
+    "client": "webpack --mode=none -w --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "body-parser": "^1.18.3",
+    "concurrently": "^4.0.1",
     "css-loader": "^0.28.11",
     "express": "^4.16.3",
     "file-loader": "^1.1.11",

@@ -45,7 +45,7 @@ import Input from './input'
                     </Grid>
 
                     <Grid item xs={8}>
-                        <Input/>
+                        <Input socket = {this.props.socket}/>
                     </Grid>
                 </Grid>
 

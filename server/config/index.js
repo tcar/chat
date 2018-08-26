@@ -2,7 +2,7 @@ module.exports =
 {
     port: 3000 || process.env.PORT,
     db:{
-        username:"tcar" || process.env.USERNAME,
+        username:"postgres" || process.env.USERNAME,
         pass:"postgres" || process.env.PASS,
         dbname: "chatDB" || process.env.DBNAME,
         dbconf:{

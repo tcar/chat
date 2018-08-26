@@ -14,20 +14,22 @@ import DialogTitle from '@material-ui/core/DialogTitle';
      constructor(){
          super()
          this.state = {
-            dialogOpen: false,
-            nickname:""
+          socket: {}
          }
-         this.handleClickOpen = this.handleClickOpen.bind(this)
-         this.handleClose = this.handleClose.bind(this)
+     }
+
+     componentWillMount()
+     {
+      this.setState({socket:this.props.socket})
+      console.log(this.props.socket)
+      this.props.socket.on("RECIEVE",(data)=>{
+        console.log("datarecieve\n")
+        console.log(data)
+      })
      }
 
     render(){
-        const socket = this.props.socket
-        socket.on("newUser",(data)=>{
-            console.log("hereeeee")
-            console.log(data)
-            this.handleClickOpen()
-        })
+
         return(<div>
       <Paper style={{maxHeight: 500, minHeight:500, overflow: 'auto'}}>
   <List>
@@ -35,41 +37,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
   </List>
 </Paper>
-<Dialog
-          open={this.state.dialogOpen}
-          onClose={this.handleClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">Enter your nickname</DialogTitle>
-          <DialogContent>
 
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="nickname"
-              type="text"
-              fullWidth
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Ok
-            </Button>
-          </DialogActions>
-        </Dialog>
     </div>
     )
     }
 
-    handleClickOpen() {
-        this.setState({ dialogOpen: true });
-      };
-    
-      handleClose() {
-        axios.post("/user/signup",this.state.nickname)
-        this.setState({ dialogOpen: false });
-      };
+
 
 
 
