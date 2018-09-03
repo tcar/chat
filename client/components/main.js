@@ -39,7 +39,7 @@ import Input from './input'
 
                         <Grid item xs={2}>
                             <Paper>
-                                <UserList/>
+                                <UserList socket = {socket}/>
                             </Paper>
                         </Grid>
                     </Grid>

@@ -19,7 +19,6 @@ import Main from './components/main'
     const { endpoint } = this.state;
     const socket = io(endpoint)
     this.setState({socket})
-    console.log(this.state.socket)
    }
    
     render(){
