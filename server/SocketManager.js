@@ -15,16 +15,27 @@ module.exports = async function(io){
                 io.emit("NONICKNAME", {})
             }
             else{
+                console.log("tuuuu\n")
+                console.log(has_nickname)
+                socket.emit("USERDATA", has_nickname)
+
                 io.emit("SENDUSERS", users)
             }
 
-            socket.on("CREATEORUPDATE",(user)=> {
-                console.log("\nhereeeeeee\n")
+            socket.on("CREATEORUPDATE",async (user)=> {
                 user.ip = socket.handshake.address
-                console.log(user)
-                let new_user = createOrUpdate(user)
-                users[usr.ip] = new_user
+                let new_user = await createOrUpdate(user)
+                console.log("\n\ntuu\n")
+                console.log(new_user)
+                users[new_user.ip] = new_user
+
+                socket.emit("USERDATA", new_user)
                 io.emit("SENDUSERS", users)
+            })
+
+            socket.on("SEND", (data)=>{
+                console.log("user \n:")
+                io.emit("MESSAGE", data)
             })
 
 
@@ -51,12 +62,12 @@ async function checkUser(user, users)
         return false
     }
     users[usr.ip] = usr
-    return true
+    return usr
 }
 
 async function createOrUpdate(user)
 {
-    let usr = await models["User"].upsert(user)
-    return usr
+    let usr = await models["User"].upsert(user, {returning:true, raw:true})
+    return usr[0]
 }
 

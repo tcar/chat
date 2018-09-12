@@ -24,7 +24,6 @@ import Main from './components/main'
     render(){
 
         return(<div>
-      <h1>App</h1>
             <Main  socket={this.state.socket}/>
 
     </div>

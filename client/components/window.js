@@ -10,14 +10,23 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
 
-
+const style = {
+  background:{
+    background: "#2e2a36",
+    maxHeight: 500,
+    minHeight:500,
+    overflow: 'auto',
+    color:"white"
+  }
+}
  export default class window extends Component{
      constructor(){
          super()
          this.state = {
           socket: {},
           open:false,
-          nickname:""
+          user:"",
+          message:[]
          }
 
          this.createOrUpdate = this.createOrUpdate.bind(this)
@@ -33,14 +42,25 @@ import DialogContentText from '@material-ui/core/DialogContentText';
       this.props.socket.on("NEWUSER", (data)=>{
         this.setState({open:false})
       })
+
+      this.props.socket.on("MESSAGE", (msg)=>{
+        console.log(msg)
+        console.log(this.state.message)
+        this.state.message.push(msg)
+        this.setState({message: this.state.message})
+      })
      }
 
     render(){
 
-        return(<div>
-      <Paper style={{maxHeight: 500, minHeight:500, overflow: 'auto'}}>
-  <List>
 
+      let msg = this.state.message.map((msg, index)=>{
+        return <div key={index}><b>{msg.user.username}</b><p >{msg.message}</p></div>
+      })
+        return(<div >
+      <Paper style={style.background}>
+  <List>
+{msg}
 <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -78,13 +98,11 @@ import DialogContentText from '@material-ui/core/DialogContentText';
     let user = {
       username:this.state.nickname
     }
-    console.log("here)")
-    console.log(this.state.socket.emit)
+
     this.state.socket.emit("CREATEORUPDATE",user)
   }
   handleChange(e)
   {
-    console.log(this.state)
     let nickname = e.target.value
     this.setState({nickname})
   }

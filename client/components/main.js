@@ -2,21 +2,45 @@ import React, { Component } from 'react'
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
+//components
 import UserList from './userList'
 import Window from './window'
-
 import Input from './input'
 
+//css
+
+
+
+const style = {
+    background:{
+        padding: 50
+    }
+}
  export default class Main extends Component{
+    constructor(){
+        super()
+        this.state ={
+            socket:{},
+            user:{}
+        }
+    }
+
+    componentWillMount()
+    {
+        this.setState({socket:this.props.socket})
+        this.props.socket.on("USERDATA", (data)=>{
+            this.setState({user: data})
+        })
+
+        
+    }
 
     render(){
         const socket = this.props.socket
-        console.log(socket)
         return(
-        <div>
-        <h1>main</h1>
         <div >
-            <Grid
+        <div  >
+            <Grid style={style.background}
             container 
             >
                <Grid
@@ -33,7 +57,7 @@ import Input from './input'
                     >
                         <Grid item xs={6}>
                             <Paper>
-                                <Window socket = {socket}/>
+                                <Window user = {this.state.user} socket = {socket}/>
                             </Paper>
                         </Grid>
 
@@ -45,7 +69,7 @@ import Input from './input'
                     </Grid>
 
                     <Grid item xs={8}>
-                        <Input socket = {this.props.socket}/>
+                        <Input user = {this.state.user} socket = {this.props.socket}/>
                     </Grid>
                 </Grid>
 
