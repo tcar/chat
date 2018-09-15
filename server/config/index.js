@@ -1,6 +1,6 @@
 module.exports = 
 {
-    port: 3000 || process.env.PORT,
+    port: process.env.PORT || 3000,
     db:{
         username: process.env.USERNAME,
         pass: process.env.PASS,
