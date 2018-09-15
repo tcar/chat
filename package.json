@@ -7,7 +7,7 @@
     "dev": "nodemon server.js",
     "webpack": "webpack --watch",
     "postinstall": "webpack -p",
-"start": "node server.js"
+"start": "node chat.js"
   },
   "repository": {
     "type": "git",
