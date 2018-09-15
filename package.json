@@ -4,9 +4,10 @@
   "description": "",
   "main": "chat.js",
   "scripts": {
-    "start": "concurrently 'npm run server' 'npm run client'",
-    "server": "nodemon chat.js",
-    "client": "webpack --mode=none -w --config webpack.config.js"
+    "dev": "nodemon server.js",
+    "webpack": "webpack --watch",
+    "postinstall": "webpack -p",
+"start": "node server.js"
   },
   "repository": {
     "type": "git",
