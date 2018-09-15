@@ -100,6 +100,7 @@ const style = {
     }
 
     this.state.socket.emit("CREATEORUPDATE",user)
+    this.setState({open:false})
   }
   handleChange(e)
   {
