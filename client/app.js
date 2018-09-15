@@ -10,7 +10,7 @@ import Main from './components/main'
    constructor(){
      super()
      this.state = {
-      endpoint: "http://localhost:3000/", 
+      endpoint: `${window.location.hostname}:${process.env.PORT}`, 
       socket:''  
     }
    }
