@@ -57,12 +57,19 @@ async function checkUser(user, users)
         ip:user.ip
     }, raw:true})
 
-    if(!usr.username)
+    if(usr)
     {
-        return false
+        if(!usr.username)
+        {
+            return false
+        }
+        users[usr.ip] = usr
+        return usr
     }
-    users[usr.ip] = usr
-    return usr
+    else 
+        return false
+
+
 }
 
 async function createOrUpdate(user)
