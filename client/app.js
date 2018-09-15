@@ -17,7 +17,7 @@ import Main from './components/main'
    componentWillMount()
    {
     const { endpoint } = this.state;
-    const socket = io(endpoint)
+    const socket = io()
     this.setState({socket})
    }
    
