@@ -68,7 +68,7 @@ const style = {
               label="nickname"
               type="text"
               value={this.state.nickname}
-              fullWidth
+              fullwidth
             />
           </DialogContent>
           <DialogActions>

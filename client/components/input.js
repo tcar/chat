@@ -38,7 +38,7 @@ const style = {
         return(
             <div>
             <Paper style={{maxHeight: 100, overflow: 'auto'}}>
-                <List fullWidth>
+                <List >
                     
                     <FormControl fullWidth>
                         <InputLabel htmlFor="name-simple">Message...</InputLabel>
@@ -64,6 +64,7 @@ const style = {
         if(e.key ==="Enter")
         {
             this.state.socket.emit("SEND", msg )
+            this.setState({input: ""})
 
         }
     }

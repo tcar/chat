@@ -4,10 +4,9 @@
   "description": "",
   "main": "chat.js",
   "scripts": {
-    "dev": "nodemon chat.js",
-    "webpack": "webpack --watch",
-    "postinstall": "webpack -p",
-"start": "node chat.js"
+    "start": "concurrently 'npm run server' 'npm run client'",
+    "server": "nodemon chat.js",
+    "client": "webpack --mode=none -w --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -35,6 +34,7 @@
     "css-loader": "^0.28.11",
     "express": "^4.16.3",
     "file-loader": "^1.1.11",
+    "getmac": "^1.4.6",
     "nodemon": "^1.17.5",
     "path": "^0.12.7",
     "pg": "^7.4.3",
