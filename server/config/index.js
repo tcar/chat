@@ -2,11 +2,11 @@ module.exports =
 {
     port: process.env.PORT || 3000,
     db:{
-        username: process.env.USERNAME,
-        pass: process.env.PASS,
-        dbname: process.env.DBNAME,
+        username:  "postgres",
+        pass:  "postgres",
+        dbname:  "chatDB",
         dbconf:{
-            host: process.env.DBHOST,
+            host: process.env.DBHOST || "localhost",
             dialect: 'postgres',
           
             pool: {

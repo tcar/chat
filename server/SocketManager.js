@@ -1,12 +1,17 @@
 
 const models = require("./models")
 let users =new Map
+const mac = require("getmac")
 
 module.exports = async function(io){
     io.on("connection", async (socket)=>{
+        let mac_addr = await getMacadd()
 
+        console.log("\nqn")
+        console.log(mac_addr)
+        console.log("\nmekadresa")
         const user = {
-            ip:socket.handshake.address
+            ip:mac_addr
         }
         try{
             let has_nickname = await checkUser(user, users)
@@ -23,7 +28,7 @@ module.exports = async function(io){
             }
 
             socket.on("CREATEORUPDATE",async (user)=> {
-                user.ip = socket.handshake.address
+                user.ip = mac_addr
                 let new_user = await createOrUpdate(user)
                 console.log("\n\ntuu\n")
                 console.log(new_user)
@@ -40,7 +45,7 @@ module.exports = async function(io){
 
 
             socket.on("disconnect", async ()=>{
-                let ip_add = socket.handshake.address
+                let ip_add = mac_addr
                 delete users[ip_add]
                 io.emit("SENDUSERS", users)
             })
@@ -76,5 +81,15 @@ async function createOrUpdate(user)
 {
     let usr = await models["User"].upsert(user, {returning:true, raw:true})
     return usr[0]
+}
+
+function getMacadd()
+{
+    return new Promise((resolve, reject)=>{
+        mac.getMac(function(err, macAddress){
+            if (err)  throw err
+            return resolve(macAddress)
+        })    
+    })
 }
 
