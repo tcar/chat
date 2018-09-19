@@ -2,16 +2,18 @@
 const models = require("./models")
 let users =new Map
 const mac = require("getmac")
-
+const axios = require("axios")
 module.exports = async function(io){
     io.on("connection", async (socket)=>{
-        let mac_addr = await getMacadd()
 
-        console.log("\nqn")
-        console.log(mac_addr)
-        console.log("\nmekadresa")
+        let ip
+        axios.get('https://api.ipify.org?').then((data)=>{
+            ip=data.data
+          })
+         
+
         const user = {
-            ip:mac_addr
+            ip:ip
         }
         try{
             let has_nickname = await checkUser(user, users)
@@ -28,7 +30,7 @@ module.exports = async function(io){
             }
 
             socket.on("CREATEORUPDATE",async (user)=> {
-                user.ip = mac_addr
+                user.ip = ip
                 let new_user = await createOrUpdate(user)
                 console.log("\n\ntuu\n")
                 console.log(new_user)
@@ -45,7 +47,7 @@ module.exports = async function(io){
 
 
             socket.on("disconnect", async ()=>{
-                let ip_add = mac_addr
+                let ip_add = ip
                 delete users[ip_add]
                 io.emit("SENDUSERS", users)
             })
