@@ -6,7 +6,10 @@
   "scripts": {
     "start": "concurrently 'npm run server' 'npm run client'",
     "server": "nodemon chat.js",
-    "client": "webpack --mode=none -w --config webpack.config.js"
+    "client": "webpack --mode=none -w --config webpack.config.js",
+    "dev": "nodemon chat.js",
+    "webpack": "webpack --watch",
+    "postinstall": "webpack -p"
   },
   "repository": {
     "type": "git",
