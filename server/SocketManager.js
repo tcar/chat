@@ -15,7 +15,7 @@ module.exports = async function(io){
                  let has_nickname = await checkUser(user, users, socket)
                  if (!has_nickname)
                  {
-                     io.emit("NONICKNAME", {})
+                     socket.emit("NONICKNAME", {})
                  }
                  else{
                      console.log("tuuuu\n")
