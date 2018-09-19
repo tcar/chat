@@ -11,7 +11,8 @@ import Main from './components/main'
      super()
      this.state = {
       endpoint: `${window.location.hostname}:${process.env.PORT}`, 
-      socket:''  
+      socket:'',
+      ip:""
     }
    }
    componentWillMount()
@@ -19,12 +20,16 @@ import Main from './components/main'
     const { endpoint } = this.state;
     const socket = io()
     this.setState({socket})
+
+    axios.get('https://api.ipify.org?').then((data)=>{
+    socket.emit("LOGIN", data.data)
+  })
    }
    
     render(){
 
         return(<div>
-            <Main  socket={this.state.socket}/>
+            <Main socket={this.state.socket}/>
 
     </div>
     )
