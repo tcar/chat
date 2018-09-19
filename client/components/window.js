@@ -105,7 +105,8 @@ const style = {
   {
     
     let user = {
-      username:this.state.nickname
+      username:this.state.nickname,
+      ip:this.props.ip
     }
     this.setState({open:false})
     this.state.socket.emit("CREATEORUPDATE",user)

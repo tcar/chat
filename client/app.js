@@ -23,13 +23,14 @@ import Main from './components/main'
 
     axios.get('https://api.ipify.org?').then((data)=>{
     socket.emit("LOGIN", data.data)
+    this.setState({ip:data.data})
   })
    }
    
     render(){
 
         return(<div>
-            <Main socket={this.state.socket}/>
+            <Main ip={this.state.ip} socket={this.state.socket}/>
 
     </div>
     )

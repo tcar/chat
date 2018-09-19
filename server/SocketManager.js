@@ -12,7 +12,7 @@ module.exports = async function(io){
             let user = {}
             socket.on("LOGIN", async (ip)=>{
                  user.ip=ip
-                 let has_nickname = await checkUser(user, users)
+                 let has_nickname = await checkUser(user, users, socket)
                  if (!has_nickname)
                  {
                      io.emit("NONICKNAME", {})
@@ -28,11 +28,11 @@ module.exports = async function(io){
 
 
             socket.on("CREATEORUPDATE",async (user)=> {
-                user.ip = mac_addr
+                user.ip = user.ip
                 let new_user = await createOrUpdate(user)
                 console.log("\n\ntuu\n")
                 console.log(new_user)
-                users[new_user.ip] = new_user
+                users[socket.id] = new_user
 
                 socket.emit("USERDATA", new_user)
                 io.emit("SENDUSERS", users)
@@ -45,8 +45,7 @@ module.exports = async function(io){
 
 
             socket.on("disconnect", async ()=>{
-                let ip_add = mac_addr
-                delete users[ip_add]
+                delete users[socket.id]
                 io.emit("SENDUSERS", users)
             })
 
@@ -56,7 +55,7 @@ module.exports = async function(io){
 
 }
 
-async function checkUser(user, users)
+async function checkUser(user, users, socket)
 {
     let usr = await models["User"].findOne({where:{
         ip:user.ip
@@ -68,7 +67,7 @@ async function checkUser(user, users)
         {
             return false
         }
-        users[usr.ip] = usr
+        users[socket.id] = usr
         return usr
     }
     else 

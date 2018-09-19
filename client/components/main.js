@@ -31,8 +31,6 @@ const style = {
         this.props.socket.on("USERDATA", (data)=>{
             this.setState({user: data})
         })
-
-        
     }
 
     render(){
@@ -57,7 +55,7 @@ const style = {
                     >
                         <Grid item xs={6}>
                             <Paper>
-                                <Window user = {this.state.user} socket = {socket}/>
+                                <Window ip={this.props.ip} user = {this.state.user} socket = {socket}/>
                             </Paper>
                         </Grid>
 
