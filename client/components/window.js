@@ -15,7 +15,7 @@ const style = {
     background: "#2e2a36",
     maxHeight: 500,
     minHeight:500,
-    overflow: 'auto',
+    overflow: 'scroll',
     color:"white"
   }
 }
@@ -44,21 +44,28 @@ const style = {
       })
 
       this.props.socket.on("MESSAGE", (msg)=>{
-        console.log(msg)
-        console.log(this.state.message)
         this.state.message.push(msg)
         this.setState({message: this.state.message})
       })
      }
 
-    render(){
+     componentDidUpdate()
+     {
+      this.scroller.scrollTop = this.scroller.scrollHeight
+     }
 
+
+    render(){
 
       let msg = this.state.message.map((msg, index)=>{
         return <div key={index}><b>{msg.user.username}</b><p >{msg.message}</p></div>
       })
-        return(<div >
-      <Paper style={style.background}>
+        return(<div  >
+      <div style={style.background}
+           ref = {(scroller) => {
+             this.scroller = scroller
+           }}
+      >
   <List>
 {msg}
 <Dialog
@@ -76,7 +83,6 @@ const style = {
               label="nickname"
               type="text"
               value={this.state.nickname}
-              fullWidth
             />
           </DialogContent>
           <DialogActions>
@@ -87,20 +93,24 @@ const style = {
           </DialogActions>
         </Dialog>
   </List>
-</Paper>
+</div>
 
     </div>
     )
+
+
     }
 
   createOrUpdate()
   {
+    
     let user = {
       username:this.state.nickname
     }
-
-    this.state.socket.emit("CREATEORUPDATE",user)
     this.setState({open:false})
+    this.state.socket.emit("CREATEORUPDATE",user)
+    this.scroller.scrollTop = this.scroller.scrollHeight
+
   }
   handleChange(e)
   {
