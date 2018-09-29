@@ -26,6 +26,7 @@ const style = {
           socket: {},
           open:false,
           user:"",
+          nickname:"",
           message:[]
          }
 

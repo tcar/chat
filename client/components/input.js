@@ -42,7 +42,7 @@ const style = {
                     
                     <FormControl fullWidth>
                         <InputLabel htmlFor="name-simple">Message...</InputLabel>
-                        <Input fullWidth={true} id="name-simple" value={this.state.input} onChange ={(e)=>{this.handleChange(e)}} onKeyPress={(e)=>{this.send(this.state.input, e)}} />
+                        <Input fullWidth id="name-simple" value={this.state.input} onChange ={(e)=>{this.handleChange(e)}} onKeyPress={(e)=>{this.send(this.state.input, e)}} />
                     </FormControl>
                 </List>
       </Paper>

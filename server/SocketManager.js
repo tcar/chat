@@ -29,6 +29,7 @@ module.exports = async function(io){
 
             socket.on("CREATEORUPDATE",async (user)=> {
                 user.ip = user.ip
+                console.log(user.ip)
                 let new_user = await createOrUpdate(user)
                 console.log("\n\ntuu\n")
                 console.log(new_user)

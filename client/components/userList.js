@@ -14,7 +14,7 @@ const style = {
         minHeight:500,
         overflow: 'auto',
         color:"white",
-        background:"#2e2a36"
+        background:"black"
     },
     cursor:{
         cursor:"pointer"
@@ -28,7 +28,8 @@ const style = {
              socket:{},
              users :[],
              open:false,
-             nickname:""
+             nickname:"",
+             user:{}
          }
          this.handleChange = this.handleChange.bind(this)
          this.handleOpen = this.handleOpen.bind(this)
@@ -41,8 +42,12 @@ const style = {
             console.log(users)
             this.setState({users:users})
         })
+        this.props.socket.on("USERDATA", (data)=>{
+            this.setState({user: data})
+        })        
 
      }
+
     render(){
         let users = []
         for (let key in this.state.users)
@@ -68,7 +73,6 @@ const style = {
               label="nickname"
               type="text"
               value={this.state.nickname}
-              fullwidth
             />
           </DialogContent>
           <DialogActions>
@@ -92,17 +96,17 @@ const style = {
 
     handleOpen(e, username)
     {
-        this.setState({open:true})
-        this.setState({nickname:username})
+        console.log(username)
+        console.log(this.state.user)
+        this.state.user.username === username ? this.setState({open:true}): null
+        this.state.nickname = username
     }
 
     update()
     {
-      let user = {
-        username:this.state.nickname
-      }
-  
-      this.state.socket.emit("CREATEORUPDATE",user)
+      this.state.user.username = this.state.nickname
+      console.log(this.state.users)
+      this.state.socket.emit("CREATEORUPDATE",this.state.user)
       this.setState({open:false})
     }
  }

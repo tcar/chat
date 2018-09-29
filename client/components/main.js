@@ -34,6 +34,8 @@ const style = {
     }
 
     render(){
+        console.log(this.state.user)
+
         const socket = this.props.socket
         return(
         <div >
@@ -61,7 +63,7 @@ const style = {
 
                         <Grid item xs={2}>
                             <Paper>
-                                <UserList socket = {socket}/>
+                                <UserList user={this.state.user} socket = {socket}/>
                             </Paper>
                         </Grid>
                     </Grid>
