@@ -25,7 +25,7 @@ const style = {
          this.state = {
           socket: {},
           open:false,
-          user:"",
+          user:{},
           nickname:"",
           message:[]
          }
@@ -48,6 +48,10 @@ const style = {
         this.state.message.push(msg)
         this.setState({message: this.state.message})
       })
+
+      this.props.socket.on("USERDATA", (data)=>{
+        this.setState({user: data})
+    })
      }
 
      componentDidUpdate()
@@ -57,9 +61,16 @@ const style = {
 
 
     render(){
-
+      console.log(this.state.user)
+      console.log(this.state.message)
       let msg = this.state.message.map((msg, index)=>{
-        return <div key={index}><b>{msg.user.username}</b><p >{msg.message}</p></div>
+        let nickname = msg.user.username
+
+        if(msg.user.id===this.state.user.id&&msg.user.username!==this.state.user.username)
+        {
+          nickname = this.state.user.username
+        }
+        return <div key={index}><b>{nickname}</b><p >{msg.message}</p></div>
       })
         return(<div  >
       <div style={style.background}
